@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #212121;
+    background-color: #f5f5f5;
+}
+
+/* Hero Section */
+.hero {
+    width: 100%;
+    height: 500px;
+    background-image: url('/public/assets/hero-supermercado.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: #ffffff;
+    font-weight: 400;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+/* Pasillos Section */
+.pasillos-section {
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    color: #2E7D32;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: #757575;
+    margin-bottom: 50px;
+}
+
+.pasillos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+/* Pasillo Card */
+.pasillo-card {
+    background-color: #ffffff;
+    border: 2px solid #E0E0E0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.pasillo-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-color: #4CAF50;
+}
+
+.pasillo-image-container {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.pasillo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.pasillo-card:hover .pasillo-image {
+    transform: scale(1.05);
+}
+
+.pasillo-content {
+    padding: 25px;
+    text-align: left;
+}
+
+.pasillo-title {
+    font-size: 1.5rem;
+    color: #2E7D32;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.pasillo-description {
+    font-size: 1rem;
+    color: #757575;
+    line-height: 1.5;
+}
+
+/* Footer */
+.footer {
+    background-color: #2E7D32;
+    color: #ffffff;
+    padding: 30px 20px;
+    margin-top: 60px;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-text {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        height: 400px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .pasillos-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .container {
+        padding: 40px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        height: 300px;
+    }
+
+    .hero-title {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .pasillo-title {
+        font-size: 1.3rem;
+    }
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2E7D32;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1B5E20;
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #2E7D32 #f1f1f1;
+}

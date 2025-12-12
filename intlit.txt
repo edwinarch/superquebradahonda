@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Mario Universe - Guía Interactiva</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('react_template/public/assets/images/mario-rabbids-background.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: #e63946;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #d62828;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(230, 57, 70, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background-color: white;
+            color: #0a0a0a;
+            transform: translateY(-2px);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #e63946;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Character Zone */
+        .character-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .character-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 2px solid #3a3a3a;
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .character-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(230, 57, 70, 0.3);
+            border-color: #e63946;
+        }
+
+        .character-icon {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .character-name {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: #e63946;
+        }
+
+        .character-role {
+            text-align: center;
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .character-description {
+            color: #d0d0d0;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .character-abilities {
+            margin-top: 1rem;
+        }
+
+        .character-abilities h4 {
+            color: #e63946;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .abilities-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .abilities-list li {
+            padding: 0.3rem 0;
+            color: #b0b0b0;
+        }
+
+        .abilities-list li:before {
+            content: "⭐ ";
+            color: #e63946;
+        }
+
+        /* Kingdom Map */
+        .kingdom-map {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 2px solid #3a3a3a;
+            border-radius: 16px;
+            padding: 3rem;
+            position: relative;
+        }
+
+        .map-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .map-region {
+            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+            border: 2px solid #4a4a4a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .map-region:hover {
+            transform: scale(1.05);
+            border-color: #e63946;
+            box-shadow: 0 8px 16px rgba(230, 57, 70, 0.3);
+        }
+
+        .region-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .region-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e63946;
+            margin-bottom: 0.5rem;
+        }
+
+        .region-description {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Items & Enemies */
+        .items-enemies-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .items-section, .enemies-section {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 2px solid #3a3a3a;
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .subsection-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e63946;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .items-grid, .enemies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .item-card, .enemy-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+            border: 2px solid #4a4a4a;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .item-card:hover, .enemy-card:hover {
+            transform: translateY(-4px);
+            border-color: #e63946;
+            box-shadow: 0 8px 16px rgba(230, 57, 70, 0.3);
+        }
+
+        .item-icon, .enemy-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-name, .enemy-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-effect, .enemy-description {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+        }
+
+        /* Game Timeline */
+        .timeline-container {
+            position: relative;
+            overflow-x: auto;
+            padding: 2rem 0;
+        }
+
+        .timeline-scroll {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+            min-width: min-content;
+        }
+
+        .game-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 2px solid #3a3a3a;
+            border-radius: 16px;
+            padding: 2rem;
+            min-width: 300px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            border-color: #e63946;
+            box-shadow: 0 12px 24px rgba(230, 57, 70, 0.3);
+        }
+
+        .game-year {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e63946;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-platform {
+            color: #b0b0b0;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .game-description {
+            color: #d0d0d0;
+            line-height: 1.6;
+        }
+
+        /* Easter Egg Zone */
+        .easter-egg-zone {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 2px solid #3a3a3a;
+            border-radius: 16px;
+            padding: 3rem;
+            text-align: center;
+        }
+
+        .easter-egg-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .easter-egg-item {
+            font-size: 4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 1rem;
+        }
+
+        .easter-egg-item:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        .easter-egg-message {
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            color: #e63946;
+            min-height: 2rem;
+            font-weight: bold;
+        }
+
+        .coin-counter {
+            font-size: 2rem;
+            color: #ffd700;
+            margin-top: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .items-enemies-container {
+                grid-template-columns: 1fr;
+            }
+
+            .map-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .character-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Scrollbar Styles */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #e63946;
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d62828;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">🍄 Super Mario Universe</h1>
+            <p class="hero-subtitle">Explora el mundo mágico de Mario y sus amigos</p>
+            <div class="hero-buttons">
+                <a href="#characters" class="btn btn-primary">Explorar Personajes</a>
+                <a href="#map" class="btn btn-secondary">Ver Mapa del Reino</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Character Zone -->
+    <section class="section" id="characters">
+        <h2 class="section-title">🎮 Zona de Personajes</h2>
+        <div class="character-grid" id="characterGrid"></div>
+    </section>
+
+    <!-- Kingdom Map -->
+    <section class="section" id="map">
+        <h2 class="section-title">🗺️ Mapa del Reino Champiñón</h2>
+        <div class="kingdom-map">
+            <p style="text-align: center; color: #b0b0b0; margin-bottom: 1rem;">
+                Haz clic en cualquier región para explorarla
+            </p>
+            <div class="map-grid" id="mapGrid"></div>
+        </div>
+    </section>
+
+    <!-- Items & Enemies -->
+    <section class="section" id="items-enemies">
+        <h2 class="section-title">📦 Objetos y Enemigos</h2>
+        <div class="items-enemies-container">
+            <div class="items-section">
+                <h3 class="subsection-title">Objetos</h3>
+                <div class="items-grid" id="itemsGrid"></div>
+            </div>
+            <div class="enemies-section">
+                <h3 class="subsection-title">Enemigos</h3>
+                <div class="enemies-grid" id="enemiesGrid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Timeline -->
+    <section class="section" id="timeline">
+        <h2 class="section-title">🕹️ Línea de Tiempo de Juegos</h2>
+        <div class="timeline-container">
+            <div class="timeline-scroll" id="timelineScroll"></div>
+        </div>
+    </section>
+
+    <!-- Easter Egg Zone -->
+    <section class="section" id="easter-eggs">
+        <h2 class="section-title">🎁 Zona de Sorpresas</h2>
+        <div class="easter-egg-zone">
+            <p style="color: #b0b0b0; margin-bottom: 1rem;">
+                ¡Haz clic en los elementos para descubrir sorpresas!
+            </p>
+            <div class="easter-egg-grid" id="easterEggGrid"></div>
+            <div class="easter-egg-message" id="easterEggMessage"></div>
+            <div class="coin-counter" id="coinCounter">Monedas: 0</div>
+        </div>
+    </section>
+
+    <script>
+        // Data
+        const characters = [
+            {
+                name: "Mario",
+                role: "Héroe Principal",
+                icon: "🔴",
+                description: "El fontanero más famoso del mundo, siempre listo para salvar a la Princesa Peach y al Reino Champiñón.",
+                abilities: ["Salto Super", "Bola de Fuego", "Transformaciones"]
+            },
+            {
+                name: "Luigi",
+                role: "Hermano de Mario",
+                icon: "🟢",
+                description: "El hermano menor de Mario, conocido por su valentía a pesar de sus miedos.",
+                abilities: ["Salto Alto", "Aspiradora", "Poltergust"]
+            },
+            {
+                name: "Princesa Peach",
+                role: "Princesa del Reino",
+                icon: "👑",
+                description: "La amable gobernante del Reino Champiñón, frecuentemente rescatada por Mario.",
+                abilities: ["Flotar", "Emociones", "Parasol"]
+            },
+            {
+                name: "Bowser",
+                role: "Rey Koopa",
+                icon: "🐢",
+                description: "El principal antagonista, siempre planeando conquistar el Reino Champiñón.",
+                abilities: ["Aliento de Fuego", "Fuerza", "Caparazón"]
+            },
+            {
+                name: "Yoshi",
+                role: "Compañero Fiel",
+                icon: "🦖",
+                description: "El dinosaurio amigable que ayuda a Mario en sus aventuras.",
+                abilities: ["Lengua Larga", "Huevos", "Flutter Jump"]
+            },
+            {
+                name: "Toad",
+                role: "Habitante del Reino",
+                icon: "🍄",
+                description: "Los leales súbditos de la Princesa Peach, siempre dispuestos a ayudar.",
+                abilities: ["Velocidad", "Conocimiento", "Apoyo"]
+            }
+        ];
+
+        const regions = [
+            {
+                name: "Reino Champiñón",
+                icon: "🍄",
+                description: "El hogar de la Princesa Peach y los Toads"
+            },
+            {
+                name: "Mundo de Lava",
+                icon: "🌋",
+                description: "El peligroso castillo de Bowser"
+            },
+            {
+                name: "Reino del Cielo",
+                icon: "☁️",
+                description: "Nubes flotantes y plataformas celestiales"
+            },
+            {
+                name: "Reino Submarino",
+                icon: "🌊",
+                description: "Océanos profundos llenos de vida marina"
+            },
+            {
+                name: "Reino del Hielo",
+                icon: "❄️",
+                description: "Tierras congeladas y montañas nevadas"
+            },
+            {
+                name: "Reino del Desierto",
+                icon: "🏜️",
+                description: "Dunas de arena y pirámides antiguas"
+            }
+        ];
+
+        const items = [
+            {
+                name: "Super Champiñón",
+                icon: "🍄",
+                effect: "Hace crecer a Mario"
+            },
+            {
+                name: "Flor de Fuego",
+                icon: "🌺",
+                effect: "Permite lanzar bolas de fuego"
+            },
+            {
+                name: "Super Estrella",
+                icon: "⭐",
+                effect: "Invencibilidad temporal"
+            },
+            {
+                name: "Hoja Tanooki",
+                icon: "🍂",
+                effect: "Permite volar y atacar con cola"
+            },
+            {
+                name: "Moneda",
+                icon: "🪙",
+                effect: "Colecciona 100 para una vida extra"
+            },
+            {
+                name: "1-UP",
+                icon: "💚",
+                effect: "Vida extra"
+            }
+        ];
+
+        const enemies = [
+            {
+                name: "Goomba",
+                icon: "🟤",
+                description: "Enemigo básico que camina"
+            },
+            {
+                name: "Koopa Troopa",
+                icon: "🐢",
+                description: "Tortuga con caparazón útil"
+            },
+            {
+                name: "Boo",
+                icon: "👻",
+                description: "Fantasma tímido"
+            },
+            {
+                name: "Piranha Plant",
+                icon: "🌱",
+                description: "Planta carnívora en tubería"
+            },
+            {
+                name: "Bullet Bill",
+                icon: "🚀",
+                description: "Proyectil volador"
+            },
+            {
+                name: "Hammer Bro",
+                icon: "🔨",
+                description: "Lanza martillos"
+            }
+        ];
+
+        const games = [
+            {
+                year: 1985,
+                title: "Super Mario Bros.",
+                platform: "NES",
+                description: "El juego que inició todo. Mario debe rescatar a la Princesa Peach del malvado Bowser."
+            },
+            {
+                year: 1988,
+                title: "Super Mario Bros. 3",
+                platform: "NES",
+                description: "Introduce el traje Tanooki y muchos mundos nuevos para explorar."
+            },
+            {
+                year: 1990,
+                title: "Super Mario World",
+                platform: "SNES",
+                description: "Presenta a Yoshi y el colorido Dinosaur Land."
+            },
+            {
+                year: 1996,
+                title: "Super Mario 64",
+                platform: "Nintendo 64",
+                description: "El primer juego de Mario en 3D, revolucionando los juegos de plataformas."
+            },
+            {
+                year: 2002,
+                title: "Super Mario Sunshine",
+                platform: "GameCube",
+                description: "Mario limpia Isle Delfino con FLUDD."
+            },
+            {
+                year: 2007,
+                title: "Super Mario Galaxy",
+                platform: "Wii",
+                description: "Mario viaja por el espacio visitando diferentes planetas."
+            },
+            {
+                year: 2017,
+                title: "Super Mario Odyssey",
+                platform: "Nintendo Switch",
+                description: "Mario explora reinos diversos con su nuevo compañero Cappy."
+            }
+        ];
+
+        // Render Functions
+        function renderCharacters() {
+            const grid = document.getElementById('characterGrid');
+            characters.forEach(character => {
+                const card = document.createElement('div');
+                card.className = 'character-card';
+                card.innerHTML = `
+                    <div class="character-icon">${character.icon}</div>
+                    <h3 class="character-name">${character.name}</h3>
+                    <p class="character-role">${character.role}</p>
+                    <p class="character-description">${character.description}</p>
+                    <div class="character-abilities">
+                        <h4>Habilidades:</h4>
+                        <ul class="abilities-list">
+                            ${character.abilities.map(ability => `<li>${ability}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderMap() {
+            const grid = document.getElementById('mapGrid');
+            regions.forEach(region => {
+                const regionDiv = document.createElement('div');
+                regionDiv.className = 'map-region';
+                regionDiv.innerHTML = `
+                    <div class="region-icon">${region.icon}</div>
+                    <h3 class="region-name">${region.name}</h3>
+                    <p class="region-description">${region.description}</p>
+                `;
+                regionDiv.addEventListener('click', () => {
+                    alert(`¡Bienvenido a ${region.name}!\n\n${region.description}`);
+                });
+                grid.appendChild(regionDiv);
+            });
+        }
+
+        function renderItems() {
+            const grid = document.getElementById('itemsGrid');
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'item-card';
+                card.innerHTML = `
+                    <div class="item-icon">${item.icon}</div>
+                    <h4 class="item-name">${item.name}</h4>
+                    <p class="item-effect">${item.effect}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderEnemies() {
+            const grid = document.getElementById('enemiesGrid');
+            enemies.forEach(enemy => {
+                const card = document.createElement('div');
+                card.className = 'enemy-card';
+                card.innerHTML = `
+                    <div class="enemy-icon">${enemy.icon}</div>
+                    <h4 class="enemy-name">${enemy.name}</h4>
+                    <p class="enemy-description">${enemy.description}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function renderTimeline() {
+            const scroll = document.getElementById('timelineScroll');
+            games.forEach(game => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                card.innerHTML = `
+                    <div class="game-year">${game.year}</div>
+                    <h3 class="game-title">${game.title}</h3>
+                    <p class="game-platform">${game.platform}</p>
+                    <p class="game-description">${game.description}</p>
+                `;
+                scroll.appendChild(card);
+            });
+        }
+
+        function renderEasterEggs() {
+            const grid = document.getElementById('easterEggGrid');
+            const message = document.getElementById('easterEggMessage');
+            const counter = document.getElementById('coinCounter');
+            let coins = 0;
+
+            const easterEggs = [
+                { icon: "🍄", message: "¡Super Champiñón! ¡Has crecido!" },
+                { icon: "⭐", message: "¡Estrella! ¡Eres invencible!" },
+                { icon: "🪙", message: "¡Moneda! +10 puntos", addCoin: true },
+                { icon: "👑", message: "¡Corona! ¡Eres la realeza!" },
+                { icon: "🎵", message: "¡Nota musical! ♪♫" },
+                { icon: "🔔", message: "¡Campana! ¡Ding dong!" },
+                { icon: "💎", message: "¡Diamante! ¡Qué brillante!" },
+                { icon: "🎁", message: "¡Regalo sorpresa! ¡Ábrelo!" }
+            ];
+
+            easterEggs.forEach(egg => {
+                const item = document.createElement('div');
+                item.className = 'easter-egg-item';
+                item.textContent = egg.icon;
+                item.addEventListener('click', () => {
+                    message.textContent = egg.message;
+                    if (egg.addCoin) {
+                        coins += 10;
+                        counter.textContent = `Monedas: ${coins}`;
+                    }
+                    item.style.animation = 'bounce 0.5s ease';
+                    setTimeout(() => {
+                        item.style.animation = '';
+                    }, 500);
+                });
+                grid.appendChild(item);
+            });
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCharacters();
+            renderMap();
+            renderItems();
+            renderEnemies();
+            renderTimeline();
+            renderEasterEggs();
+        });
+    </script>
+</body>
+</html>
